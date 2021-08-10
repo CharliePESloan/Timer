@@ -16,9 +16,7 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', 'project-list');
 Route::get('login', function () {
     return view('login');
 })->name('login');
@@ -27,6 +25,11 @@ Route::group(['middleware'=>['auth']], function () {
     Route::get('project-list', [ProjectController::class, 'projectList'])->name('project-list');
     Route::get('project-view/{id}', [ProjectController::class, 'projectView'])->name('project-view');
     Route::post('create-project', [ProjectController::class, 'createProject']);
+    Route::get('delete-project/{id}', [ProjectController::class, 'deleteProject']);
     Route::post('start-timing/{id}', [ProjectController::class, 'startTiming']);
     Route::post('stop-timing/{id}', [ProjectController::class, 'stopTiming']);
+    Route::get('undo-segment/{id}', [ProjectController::class, 'undoSegment']);
+    Route::post('reset-total/{id}', [ProjectController::class, 'resetTotal']);
+    Route::post('add-time/{id}', [ProjectController::class, 'addTime']);
+    Route::get('cancel-timer/{id}', [ProjectController::class, 'cancelTimer']);
 });
